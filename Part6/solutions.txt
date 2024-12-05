@@ -1,0 +1,63 @@
+1. Display employees whose gender is Male.
+db.employee.find({GENDER:"Male"})
+OR
+db.employee.find({GENDER:{$eq:"Male"}})
+2. Display employees who belong to London city.
+db.employee.find({CITY:{$eq:"London"}})
+3. Display employees whose salary is greater than 3500.
+db.employee.find({SALARY:{$gt:3500}})
+4. Display employees whose joining date is before 2015-01-01.
+db.employee.find({JOININGDATE:{$lt:'2015-01-01T00:00:00'}})
+5. Display employees whose EID is greater than or equal to 7.
+db.employee.find({EID:{$gte:7}})
+6. Display employees whose city is Landon or New York (use:IN)
+db.employee.find({CITY:{$in:['London','New York']}})
+7. Display employees who do not belongs to Landon or New York (use: NOT IN)
+db.employee.find({CITY:{$nin:['London','New York']}})
+8. Display the EID of those employee who lives in city London.
+db.employee.find({CITY:{$eq:'London'}},{EID:1})
+9. Display first 2 employee names who lives in New york.
+db.employee.find({CITY:{$eq:"New York"}},{ENAME:1}).limit(2)
+10. Display next 2 employee after skipping first 2 whose city is London.
+db.employee.find({CITY:{$eq:"London"}}).skip(2).limit(2)
+11. Display Male employees who lives Sydney.
+db.employee.find({$and:[{GENDER:'Male'},{CITY:'Sydney'}]})
+OR
+db.employee.find({$and:[{GENDER:{$eq:'Male'}},{CITY:{$eq:'Sydney'}}]})
+12. Display EID,ENAME,CITY and SALARY of those employees who belongs to London or 
+Sydney.
+db.employee.find(
+{$or:[{CITY:'London'},{CITY:'New York'}]},
+{EID:1,ENAME:1,CITY:1,SALARY:1})
+13. Display ENAME,SALARY and CITY of those employee whose salary is more than 7000.
+db.employee.find({SALARY:{$gt:7000}},{ENAME:1,SALARY:1,CITY:1})
+14. Display documents whose name start with E.
+2101CS302 (DBMS - II) 
+Lab – 9 MongoDB
+A.Y 2023-24
+2 | Page Database Management System - II (2101CS302) Prof. Dixita Kagathara
+db.employee.find({ENAME:/^E/})
+db.employee.find({ENAME:/^e/i})
+15. Display documents whose name starts with S or M in your collection.
+db.employee.find({ENAME:/^[S,M]/})
+16. Display documents where city starts with A to M in your collection.
+db.employee.find({ENAME:/^[A-M]/})
+17. Display documents where city name ends in ‘ney’.
+db.employee.find({CITY:/ney$/})
+18. Display employee info whose name contains n. (Both uppercase(N) and lowercase(n))
+db.employee.find({ENAME:/n/i})
+19. Display employee info whose name starts with E and having 5 characters.
+db.employee.find({ENAME:/^E..../})
+20. Display employee whose name start with S and ends in a.
+db.employee.find({$and:[{ENAME:/^S/},{ENAME:/a$/}]})
+21. Display EID, ENAME, CITY and SALARY whose name starts with ‘Phi’.
+db.employee.find({ENAME:/^Phi/},{EID:1,ENAME:1,CITY:1,SALARY:1})
+22. Display ENAME, JOININGDATE and CITY whose city contains ‘dne’ as three letters 
+somewhere in city name.
+db.employee.find({CITY:/.dne./i},{ENAME:1,JOININGDATE:1,CITY:1})
+23. Display ENAME, JOININGDATE and CITY who does not belongs to city London or Sydney.
+db.employee.find({CITY:{$nin:['London','Sydney']}},{ENAME:1,JOININGDATE:1,CITY:1})
+24. Delete the documents whose city is New York.
+db.employee.deleteMany({CITY:{$eq:'New York'}})
+25. Update ENAME of Nick to Naysa and GENDER to Female.
+db.employee.updateMany({ENAME:'Nick'},{$set:{ENAME:"Naysa",GENDER:'Female'}}
